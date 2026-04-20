@@ -27,7 +27,20 @@ async function analyzeURL() {
       body: JSON.stringify({ url })
     });
 
-    const data = await res.json();
+    const contentType = res.headers.get("content-type") || "";
+    let data;
+
+    if (contentType.includes("application/json")) {
+      data = await res.json();
+    } else {
+      const text = await res.text();
+
+      if (res.status === 401 || text.includes("<!DOCTYPE html")) {
+        throw new Error("You are not logged in or the server returned an HTML page instead of JSON.");
+      }
+
+      throw new Error("Server returned unexpected response.");
+    }
 
     if (!res.ok) {
       throw new Error(data.error || "Server error");
