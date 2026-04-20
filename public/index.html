@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard — Phishing Detection Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <span class="shield-icon">🛡️</span>
+      <span>PhishGuard</span>
+    </div>
+    <div class="nav-links">
+      <a href="#analyzer">Analyzer</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#history-section">History</a>
+      <a href="/admin">Admin</a>
+      <a href="/logout">Logout</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">AI-Powered Security Concept</div>
+    <h1>Detect phishing threats<br>before they reach you</h1>
+    <p>Analyze URLs using multiple signals like URL structure, page content, and threat intelligence.</p>
+
+    <div class="analyzer-card" id="analyzer">
+      <div class="input-row">
+        <input
+          type="text"
+          id="url-input"
+          placeholder="Paste a URL to analyze… e.g. http://paypa1-login.com"
+        />
+        <button id="analyze-btn" onclick="analyzeURL()">
+          <span id="btn-text">Analyze</span>
+          <span id="btn-spinner" class="spinner hidden"></span>
+        </button>
+      </div>
+      <div id="result-area" class="hidden"></div>
+    </div>
+  </section>
+
+  <section class="stats-row">
+    <div class="stat"><strong>3</strong><span>Detection layers</span></div>
+    <div class="stat"><strong>Live</strong><span>Dashboard updates</span></div>
+    <div class="stat"><strong>SQLite</strong><span>Scan history storage</span></div>
+    <div class="stat"><strong>Search</strong><span>Filter scans fast</span></div>
+  </section>
+
+  <section class="section" id="how-it-works">
+    <div class="section-label">How it works</div>
+    <h2>Multi-layer detection pipeline</h2>
+    <div class="layers-grid">
+      <div class="layer-card">
+        <div class="layer-icon info">🔍</div>
+        <div>
+          <strong>URL Analysis</strong>
+          <p>Checks risky patterns such as insecure protocol, suspicious keywords, typosquatting, long URLs, and obfuscation signals.</p>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="layer-icon success">📄</div>
+        <div>
+          <strong>Content Analysis</strong>
+          <p>Scans webpage HTML for password fields, suspicious forms, phishing phrases, hidden inputs, and unusual behaviors.</p>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="layer-icon danger">🛡️</div>
+        <div>
+          <strong>Threat Feed Check</strong>
+          <p>Cross-checks the URL with VirusTotal and PhishTank when API support is available.</p>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="layer-icon gray">📈</div>
+        <div>
+          <strong>Dashboard Analytics</strong>
+          <p>See saved scan history, verdict trends, filters, and recent scans from your phishing detection platform.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="dashboard">
+    <div class="section-label">Dashboard</div>
+    <h2>Detection analytics</h2>
+
+    <div class="dashboard-grid">
+      <div class="dash-card">
+        <div class="dash-label">Total scans</div>
+        <div class="dash-value" id="total-scans">0</div>
+        <div class="dash-sub">All saved scans</div>
+      </div>
+
+      <div class="dash-card danger-card">
+        <div class="dash-label">Phishing detected</div>
+        <div class="dash-value" id="phishing-count">0</div>
+        <div class="dash-sub">High-risk detections</div>
+      </div>
+
+      <div class="dash-card warning-card">
+        <div class="dash-label">Suspicious scans</div>
+        <div class="dash-value" id="suspicious-count">0</div>
+        <div class="dash-sub">Medium-risk detections</div>
+      </div>
+
+      <div class="dash-card success-card">
+        <div class="dash-label">Safe scans</div>
+        <div class="dash-value" id="safe-count">0</div>
+        <div class="dash-sub">Low-risk detections</div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-label">Average risk</div>
+        <div class="dash-value" id="avg-risk">0%</div>
+        <div class="dash-sub">Across all scans</div>
+      </div>
+    </div>
+
+    <div class="chart-placeholder">
+      <canvas id="bar-chart"></canvas>
+    </div>
+  </section>
+
+  <section class="section" id="history-section">
+    <div class="section-label">History</div>
+    <h2>Search and filter recent scans</h2>
+
+    <div class="filters-row">
+      <input type="text" id="search-input" placeholder="Search by URL, file, email or detected flag..." />
+
+      <select id="verdict-filter">
+        <option value="all">All verdicts</option>
+        <option value="phishing">Phishing</option>
+        <option value="suspicious">Suspicious</option>
+        <option value="safe">Safe</option>
+      </select>
+
+      <select id="sort-filter">
+        <option value="newest">Newest first</option>
+        <option value="highest_risk">Highest risk</option>
+        <option value="lowest_risk">Lowest risk</option>
+      </select>
+
+      <button class="secondary-btn" id="apply-filters-btn">Apply</button>
+    </div>
+
+    <div class="history-table-wrap">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Target</th>
+            <th>Verdict</th>
+            <th>Risk</th>
+            <th>Signals</th>
+          </tr>
+        </thead>
+        <tbody id="history-body">
+          <tr>
+            <td colspan="6" class="empty-state">No scans yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-brand">🛡️ PhishGuard</div>
+    <p>Built with Flask · HTML/CSS/JS · BeautifulSoup · Threat Intelligence · AI Risk Scoring</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

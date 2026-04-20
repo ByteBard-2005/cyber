@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard — History</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <span class="shield-icon">🛡️</span>
+      <span>PhishGuard</span>
+    </div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/history">History</a>
+      <a href="/admin">Admin</a>
+      <a href="/logout">Logout</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="section-label">History</div>
+    <h2>Search and filter scan history</h2>
+
+    <div class="filters-row">
+      <input type="text" id="search-input" placeholder="Search by URL, email, file or flag..." />
+
+      <select id="verdict-filter">
+        <option value="all">All verdicts</option>
+        <option value="phishing">Phishing</option>
+        <option value="suspicious">Suspicious</option>
+        <option value="safe">Safe</option>
+      </select>
+
+      <select id="sort-filter">
+        <option value="newest">Newest first</option>
+        <option value="highest_risk">Highest risk</option>
+        <option value="lowest_risk">Lowest risk</option>
+      </select>
+
+      <button class="secondary-btn" id="apply-filters-btn">Apply</button>
+    </div>
+
+    <div class="history-table-wrap">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Target</th>
+            <th>Verdict</th>
+            <th>Risk</th>
+            <th>Signals</th>
+          </tr>
+        </thead>
+        <tbody id="history-body">
+          <tr>
+            <td colspan="6" class="empty-state">No scan history found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-brand">🛡️ PhishGuard</div>
+    <p>History view</p>
+  </footer>
+
+  <script src="/js/history.js"></script>
+</body>
+</html>

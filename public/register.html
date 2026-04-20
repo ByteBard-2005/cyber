@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - PhishGuard Pro</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="auth-bg">
+
+  <div class="auth-box">
+    <div class="auth-logo">🛡️</div>
+    <h1>Create Account</h1>
+    <p class="auth-subtitle">Register for PhishGuard Pro</p>
+
+    <input id="full_name" type="text" placeholder="Full name" />
+    <input id="username" type="text" placeholder="Username" />
+    <input id="email" type="email" placeholder="Email" />
+    <input id="password" type="password" placeholder="Password" />
+
+    <button onclick="register()">Register</button>
+
+    <p id="msg" class="form-message"></p>
+
+    <p class="auth-footer">
+      Already have an account?
+      <a href="/login">Login</a>
+    </p>
+  </div>
+
+  <script src="/js/auth.js"></script>
+</body>
+</html>

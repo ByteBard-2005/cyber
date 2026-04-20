@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <span class="shield-icon">🛡️</span>
+      <span>PhishGuard</span>
+    </div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/history">History</a>
+      <a href="/admin">Admin</a>
+      <a href="/logout">Logout</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="section-label">Admin</div>
+    <h2>Blacklist management</h2>
+
+    <div class="admin-panel">
+      <div class="admin-form-card">
+        <div class="dash-label">Add domain to blacklist</div>
+        <div class="input-row">
+          <input type="text" id="domain-input" placeholder="Enter domain e.g. fake-paypal.com" />
+          <button id="add-domain-btn" onclick="addBlacklistDomain()">Add</button>
+        </div>
+        <p id="admin-message" class="form-message"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Blacklist</div>
+    <h2>Blocked domains</h2>
+
+    <div class="history-table-wrap">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Domain</th>
+            <th>Added at</th>
+          </tr>
+        </thead>
+        <tbody id="blacklist-body">
+          <tr>
+            <td colspan="2" class="empty-state">No domains in blacklist.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-brand">🛡️ PhishGuard</div>
+    <p>Admin view</p>
+  </footer>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>
